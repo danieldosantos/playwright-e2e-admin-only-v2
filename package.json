@@ -6,7 +6,7 @@
   "scripts": {
     "test": "playwright test",
     "test:ui": "playwright test --ui",
-    "codegen": "playwright codegen $BASE_URL"
+    "codegen": "node scripts/codegen.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.47.2",

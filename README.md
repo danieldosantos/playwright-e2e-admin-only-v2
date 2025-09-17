@@ -33,6 +33,7 @@ O **Codegen** é útil para descobrir seletores automaticamente navegando pela s
 npm run codegen
 ```
 
+- O script usa `dotenv` para carregar automaticamente as variáveis definidas em `env/.env`.
 - Ele abrirá o navegador já apontado para `BASE_URL` configurada no `.env`.
 - Cada clique, digitação ou ação vai gerar código no terminal com os seletores.
 - Exemplo gerado pelo codegen:
