@@ -1,7 +1,7 @@
 
 import { test as base, expect, Page } from '@playwright/test';
 
-const shouldUseAuth0Selectors = (url: string) => {
+const shouldUseAuth0Selectors = async (page: Page) => {
   const provider = process.env.AUTH_PROVIDER?.toLowerCase();
 
   if (provider === 'auth0') {
@@ -12,9 +12,27 @@ const shouldUseAuth0Selectors = (url: string) => {
     return false;
   }
 
-  const normalizedUrl = url?.toLowerCase() ?? '';
+  const detectors: Promise<boolean>[] = [
+    page
+      .waitForSelector('[data-testid="input-email"]', { state: 'visible' })
+      .then(() => false),
+    page
+      .waitForSelector('[data-testid="btn-login"]', { state: 'visible' })
+      .then(() => false),
+    page
+      .waitForSelector('input[name="username"]', { state: 'visible' })
+      .then(() => true),
+    page
+      .waitForSelector('input[name="password"]', { state: 'visible' })
+      .then(() => true),
+    page.waitForURL(/auth0\.com/i).then(() => true),
+  ].map((promise) => promise.catch(() => new Promise<boolean>(() => {})));
 
-  return normalizedUrl.includes('auth0.com');
+  const fallback = page.waitForTimeout(30000).then(() => {
+    throw new Error('Timed out waiting for login form to become available.');
+  });
+
+  return Promise.race([...detectors, fallback]);
 };
 
 const fillInternalLoginForm = async (page: Page, email: string, password: string) => {
@@ -41,7 +59,7 @@ export const test = base.extend<{
     const fn = async () => {
       await page.goto('/');
 
-      const useAuth0 = shouldUseAuth0Selectors(page.url());
+      const useAuth0 = await shouldUseAuth0Selectors(page);
       if (useAuth0) {
         await fillAuth0LoginForm(page, process.env.ADMIN_EMAIL!, process.env.ADMIN_PASSWORD!);
       } else {
