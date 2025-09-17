@@ -39,9 +39,12 @@ const args = hasLocalPlaywright
   ? ['codegen', baseUrl, ...extraArgs]
   : ['playwright', 'codegen', baseUrl, ...extraArgs];
 
-const child = spawn(command, args, {
+const spawnOptions = {
   stdio: 'inherit',
-});
+  ...(isWindows ? { shell: true } : {}),
+};
+
+const child = spawn(command, args, spawnOptions);
 
 child.on('close', (code) => {
   process.exit(code ?? 0);
