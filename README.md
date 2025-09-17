@@ -41,8 +41,12 @@ Antes de instalar, garanta que seu ambiente possui:
    BASE_URL="https://sua-aplicacao.com"
    ADMIN_EMAIL="admin@example.com"
    ADMIN_PASSWORD="senha-super-secreta"
+    AUTH_PROVIDER="internal"
    ```
    > Observação: informe apenas o domínio (sem caminhos ou parâmetros). Fluxos especiais, como redirecionamentos ou autenticações externas, exigem ajustes no código dos testes para que o fluxo seja reproduzido corretamente.
+   >
+   > - `AUTH_PROVIDER` é opcional. Quando ausente, a fixture tenta detectar automaticamente se a URL de login está hospedada no Auth0 (`auth0.com`) para usar os seletores apropriados.
+   > - Defina `AUTH_PROVIDER=auth0` para forçar o uso dos seletores do provedor mesmo em domínios personalizados, ou `AUTH_PROVIDER=internal` para manter o formulário nativo.
 3. Novas chaves podem ser adicionadas ao `.env` conforme necessidade. Tudo é carregado automaticamente antes de cada teste.
 
 ## Executar os testes
