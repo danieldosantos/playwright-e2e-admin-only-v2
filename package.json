@@ -1,0 +1,17 @@
+{
+  "name": "playwright-e2e-admin-only-v2",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "codegen": "playwright codegen $BASE_URL"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.2",
+    "dotenv": "^16.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}

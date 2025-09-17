@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+.pnpm-debug.log
+
+# Playwright outputs
+test-results/
+playwright-report/
+blob-report/
+trace.zip
+*.trace.zip
+*.zip
+
+# Environment
+.env
+env/.env
+.env.local
+.env.*.local
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sw?
+*.swo
+*.swn
+*.swp
+
+# Logs
+*.log
+logs/
+*.out
+*.err
+
+# System
+.DS_Store
+Thumbs.db
+
+# Coverage (caso use cobertura de testes futuramente)
+coverage/
