@@ -6,16 +6,17 @@ import { FreightNegotiationPage } from '@pages/freight-negotiation.page';
 import { FreightWizardPage } from '@pages/freight-wizard.page';
 import { FretesPage } from '@pages/fretes.page';
 
-const createAttachmentPayload = (): FilePayload => {
-  const base64Content =
-    'VGhpcyBpcyBhIHRlc3QgZG9jdW1lbnQgZm9yIGZyZWlnaHQgbmVnb3RpYXRpb24u';
+const NEGOTIATION_ATTACHMENT = {
+  name: 'negotiation-note.txt',
+  mimeType: 'text/plain',
+  base64Content: 'VGhpcyBpcyBhIHRlc3QgZG9jdW1lbnQgZm9yIGZyZWlnaHQgbmVnb3RpYXRpb24u',
+} as const;
 
-  return {
-    name: 'negotiation-note.txt',
-    mimeType: 'text/plain',
-    buffer: Buffer.from(base64Content, 'base64'),
-  };
-};
+const createAttachmentPayload = (): FilePayload => ({
+  name: NEGOTIATION_ATTACHMENT.name,
+  mimeType: NEGOTIATION_ATTACHMENT.mimeType,
+  buffer: Buffer.from(NEGOTIATION_ATTACHMENT.base64Content, 'base64'),
+});
 
 test.describe('Frete - Fluxo completo (Admin)', () => {
   test('Admin cria frete, negocia, homologa e conclui', async ({ page, loginAdmin }) => {
