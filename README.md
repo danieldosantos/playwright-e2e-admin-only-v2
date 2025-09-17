@@ -42,6 +42,7 @@ Antes de instalar, garanta que seu ambiente possui:
    ADMIN_EMAIL="admin@example.com"
    ADMIN_PASSWORD="senha-super-secreta"
    ```
+   > Observação: informe apenas o domínio (sem caminhos ou parâmetros). Fluxos especiais, como redirecionamentos ou autenticações externas, exigem ajustes no código dos testes para que o fluxo seja reproduzido corretamente.
 3. Novas chaves podem ser adicionadas ao `.env` conforme necessidade. Tudo é carregado automaticamente antes de cada teste.
 
 ## Executar os testes
