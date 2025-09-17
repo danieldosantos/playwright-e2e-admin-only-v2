@@ -1,4 +1,4 @@
-import { expect, Page } from '@playwright/test';
+import { expect, Page, type FilePayload } from '@playwright/test';
 
 export type TravelStatus = 'in-transit' | 'delivered';
 
@@ -26,9 +26,9 @@ export class FreightNegotiationPage {
     ).toBeVisible();
   }
 
-  async uploadAttachment(filePath: string) {
+  async uploadAttachment(file: string | FilePayload) {
     await this.page.getByTestId('chat-upload-trigger').click();
-    await this.page.getByTestId('chat-upload-input').setInputFiles(filePath);
+    await this.page.getByTestId('chat-upload-input').setInputFiles(file);
     await expect(this.page.getByTestId('chat-upload-success')).toBeVisible();
   }
 

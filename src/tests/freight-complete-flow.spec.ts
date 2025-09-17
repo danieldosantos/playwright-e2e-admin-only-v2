@@ -1,11 +1,21 @@
-import path from 'path';
+import { Buffer } from 'node:buffer';
+import type { FilePayload } from '@playwright/test';
 
 import { test } from '@fixtures/auth';
 import { FreightNegotiationPage } from '@pages/freight-negotiation.page';
 import { FreightWizardPage } from '@pages/freight-wizard.page';
 import { FretesPage } from '@pages/fretes.page';
 
-const attachmentPath = path.resolve('src/assets/logo-valida.png');
+const createAttachmentPayload = (): FilePayload => {
+  const base64Content =
+    'VGhpcyBpcyBhIHRlc3QgZG9jdW1lbnQgZm9yIGZyZWlnaHQgbmVnb3RpYXRpb24u';
+
+  return {
+    name: 'negotiation-note.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from(base64Content, 'base64'),
+  };
+};
 
 test.describe('Frete - Fluxo completo (Admin)', () => {
   test('Admin cria frete, negocia, homologa e conclui', async ({ page, loginAdmin }) => {
@@ -60,7 +70,9 @@ test.describe('Frete - Fluxo completo (Admin)', () => {
 
     await negotiation.openConversationByReference(freightReference);
     await negotiation.postMessage('oi isso é um teste');
-    await negotiation.uploadAttachment(attachmentPath);
+    const attachment = createAttachmentPayload();
+
+    await negotiation.uploadAttachment(attachment);
 
     await negotiation.moveToHomologation('envie os documentos');
     await negotiation.moveToApproved('tudo certo');
