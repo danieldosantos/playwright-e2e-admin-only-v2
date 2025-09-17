@@ -26,7 +26,11 @@ export class FretesPage {
 
   async openDetalheDoFretePorTexto(texto: string) {
     // Requer que a sua tabela/linha tenha data-testid de detalhe ou link
-    await this.page.getByTestId('link-detalhe-frete', { hasText: texto }).first().click();
+    await this.page
+      .getByTestId('link-detalhe-frete')
+      .filter({ hasText: texto })
+      .first()
+      .click();
   }
 
   async cancelarFrete(motivo: string) {
